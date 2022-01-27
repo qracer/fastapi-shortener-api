@@ -23,3 +23,11 @@ def shorten_link(db: Session, url: str):
     db.commit()
     db.refresh(db_url_conformity)
     return db_url_conformity
+
+def create_link(db: Session, url: str, shortUrl: str):
+    db_url_conformity = models.LinkToLink(
+        url=url, shortenedUrl=shortUrl)
+    db.add(db_url_conformity)
+    db.commit()
+    db.refresh(db_url_conformity)
+    return db_url_conformity
