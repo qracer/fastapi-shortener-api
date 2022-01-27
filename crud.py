@@ -5,18 +5,21 @@ import schemas
 from shortener import get_random_scrap
 
 def find_with_ordinary(db: Session, url: str):
-        return db.query(models.LinkToLink) \
+    """Find a shortened version in the database by an original URL"""
+    return db.query(models.LinkToLink) \
         .filter(models.LinkToLink.url == url) \
         .first()
 
 
 def find_with_shortened(db: Session, shortenedUrl: str):
+    """Find an original URL in the database by a shortened version"""
     return db.query(models.LinkToLink) \
         .filter(models.LinkToLink.shortenedUrl == shortenedUrl) \
         .first()
 
 
 def shorten_link(db: Session, url: str):
+    """Generate a contraction and add a received pair to the database"""
     db_url_conformity = models.LinkToLink(
         url=url, shortenedUrl=get_random_scrap())
     db.add(db_url_conformity)
@@ -25,6 +28,7 @@ def shorten_link(db: Session, url: str):
     return db_url_conformity
 
 def create_link(db: Session, url: str, shortUrl: str):
+    """Add a prepared pair to the database"""
     db_url_conformity = models.LinkToLink(
         url=url, shortenedUrl=shortUrl)
     db.add(db_url_conformity)

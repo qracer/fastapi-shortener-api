@@ -25,23 +25,32 @@ def get_db():
 
 @app.get("/")
 def home():
-    return {"Hello": "World"}
+    return {"Message": "The documentation is available on http://localhost:8000/docs"}
 
 
 @app.get("/find_shortened/")
 def get_pair(url: str, db: Session = Depends(get_db)):
+    """
+    Find a short version by original URL.
+    """
     relationship = crud.find_with_ordinary(db, url=url)
     return relationship
 
 
 @app.get("/find_original/")
 def get_pair(url: str, db: Session = Depends(get_db)):
+    """
+    Find an original URL by a short version.
+    """
     relationship = crud.find_with_shortened(db, shortenedUrl=url)
     return relationship
 
 
 @app.get("/{shortenedUrl}/")
 def get_link(shortenedUrl: str, db: Session = Depends(get_db)):
+    """
+    Make an HTTP request to be redirected from a shortened URL.
+    """
     relationship = crud.find_with_shortened(db, shortenedUrl=shortenedUrl)
     destination = relationship.url
     return RedirectResponse(destination)
@@ -49,6 +58,10 @@ def get_link(shortenedUrl: str, db: Session = Depends(get_db)):
 
 @app.post("/shorten/")
 def create_link(url_to_shorten: schemas.URL, db: Session = Depends(get_db)):
+    """
+    Shorten a URL. The URL is going to be checked for availability 
+    in case it does not exist.
+    """
     if not check_availability(url_to_shorten.url):
         return {"Message": "The website is not available"}
 
@@ -59,6 +72,9 @@ def create_link(url_to_shorten: schemas.URL, db: Session = Depends(get_db)):
 
 @app.post("/create/")
 def create_custom(custom_link: schemas.URLtoURL, db: Session = Depends(get_db)):
+    """
+    Create a custom contraction provided by a request.
+    """
     if not check_availability(custom_link.url):
         return {"Message": "The website is not available"}
     
