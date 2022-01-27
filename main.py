@@ -46,13 +46,17 @@ def get_pair(url: str, db: Session = Depends(get_db)):
     return relationship
 
 
-@app.get("/{shortenedUrl}/")
+@app.get("/go/{shortenedUrl}/")
 def get_link(shortenedUrl: str, db: Session = Depends(get_db)):
     """
     Make an HTTP request to be redirected from a shortened URL.
     """
     relationship = crud.find_with_shortened(db, shortenedUrl=shortenedUrl)
+    if not relationship and shortenedUrl != 'docs':
+        return {"Message": "No such shortened link in the database"}
+        
     destination = relationship.url
+    
     return RedirectResponse(destination)
 
 

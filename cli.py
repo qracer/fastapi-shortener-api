@@ -6,7 +6,7 @@ help_shorten = "Creates a shortened link\n" \
 
 help_find = "Finds a shortened URI by original URL\n" \
     "For example: py cli.py -f https://cnn.com/"
-    
+
 help_unpack = "Finds an original URL by shortened version\n" \
     "For example: py cli.py -u 9JH4G"
 

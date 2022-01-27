@@ -1,10 +1,17 @@
 # shortening algorithm
 
-import random, string
+import hashlib
 import requests
 
-def get_random_scrap(N=5) -> str:
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+def shorten(link: str):
+    """
+    Calculates a hash function for a string and returns eight characters
+    from the beginning of the received value.
+    """
+    # ! The algorithm used in this function must be checked out for
+    # ! the probability of URL collision when hash calculation for two
+    # ! different strings gives the same result 
+    return hashlib.sha256(link.encode()).hexdigest()[:8]
 
 def check_availability(url: str):
     try:
