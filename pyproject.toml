@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "url_shortener"
+version = "0.1.0"
+description = ""
+authors = ["Vadim Gerasimenko <vadimgerasimenko101@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.73.0"
+uvicorn = "^0.17.0"
+SQLAlchemy = "^1.4.31"
+requests = "^2.27.1"
+
+[tool.poetry.dev-dependencies]
+autopep8 = "^1.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
